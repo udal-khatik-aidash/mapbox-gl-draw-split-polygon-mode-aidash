@@ -134,11 +134,11 @@ SplitPolygonMode.fireUpdate = function (newF) {
   });
 };
 
-SplitPolygonMode.onStop = function () {
-  console.log("im here!!!!!!! deleting everything");
+// SplitPolygonMode.onStop = function () {
+//   console.log("im here!!!!!!! deleting everything");
 
-  this.deleteAll();
-};
+//   this.deleteAll();
+// };
 
 export default SplitPolygonMode;
 
