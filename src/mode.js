@@ -108,14 +108,18 @@ SplitPolygonMode.drawAndSplit = function (state) {
       },
       onCancel: () => {
         setTimeout(() => {
-          state.api.changeMode(state.api.options.defaultMode);
-          state.api.deleteAll();
+          try {
+            state.api.changeMode("simple_select");
+            state.api.deleteAll();
+          } catch (error) {
+            console.error("🚀 ~ file: mode.js ~ line 115 ~ err", error);
+          }
         }, 0);
         this.highlighFeatures(state, false);
       },
     });
   } catch (err) {
-    console.error("🚀 ~ file: mode.js ~ line 116 ~ err", err);
+    console.error("🚀 ~ file: mode.js ~ line 122 ~ err", err);
   }
 };
 
