@@ -107,8 +107,10 @@ SplitPolygonMode.drawAndSplit = function (state) {
         this.highlighFeatures(state, false);
       },
       onCancel: () => {
-        state.api.changeMode(state.api.options.defaultMode);
-        state.api.deleteAll();
+        setTimeout(() => {
+          state.api.changeMode(state.api.options.defaultMode);
+          state.api.deleteAll();
+        }, 0);
         this.highlighFeatures(state, false);
       },
     });
