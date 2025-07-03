@@ -109,8 +109,10 @@ SplitPolygonMode.drawAndSplit = function (state) {
       onCancel: () => {
         setTimeout(() => {
           try {
+            console.log('calling me cancel!!!!');            
             state.api.changeMode("simple_select");
             state.api.deleteAll();
+            console.log("call completed");
           } catch (error) {
             console.error("🚀 ~ file: mode.js ~ line 115 ~ err", error);
           }
