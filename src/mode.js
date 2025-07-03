@@ -77,19 +77,24 @@ SplitPolygonMode.drawAndSplit = function (state) {
   try {
     this.changeMode(passingModeName, {
       onDraw: (cuttingLineString) => {
-        console.log('onDraw');
         const newPolygons = [];
+        
+        console.log({ featuresToSplit: state.featuresToSplit });
+
         state.featuresToSplit.forEach((el) => {
           if (booleanDisjoint(el, cuttingLineString)) {
+            console.log('line was outside of polygon');
             console.info(`Line was outside of Polygon ${el.id}`);
             newPolygons.push(el);
             return;
           } else if (lineWidth === 0) {
+            console.log('line width is 0');
             const polycut = polygonCut(el.geometry, cuttingLineString.geometry);
             polycut.id = el.id;
             api.add(polycut);
             newPolygons.push(polycut);
           } else {
+            console.log('line width is not 0');
             const polycut = polygonCutWithSpacing(
               el.geometry,
               cuttingLineString.geometry,
@@ -98,6 +103,8 @@ SplitPolygonMode.drawAndSplit = function (state) {
                 line_width_unit: lineWidthUnit,
               }
             );
+            console.log({ polycut });
+
             polycut.id = el.id;
             api.add(polycut);
             newPolygons.push(polycut);
