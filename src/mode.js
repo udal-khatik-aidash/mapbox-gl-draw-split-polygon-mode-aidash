@@ -134,9 +134,9 @@ SplitPolygonMode.fireUpdate = function (newF) {
   });
 };
 
-// SplitPolygonMode.onStop = function ({ main }) {
-//   console.log("🚀 ~ file: mode.js ~ line 60 ~ onStop");
-// };
+SplitPolygonMode.onStop = function () {
+  this.deleteAll();
+};
 
 export default SplitPolygonMode;
 
