@@ -77,6 +77,7 @@ SplitPolygonMode.drawAndSplit = function (state) {
   try {
     this.changeMode(passingModeName, {
       onDraw: (cuttingLineString) => {
+        console.log('onDraw');
         const newPolygons = [];
         state.featuresToSplit.forEach((el) => {
           if (booleanDisjoint(el, cuttingLineString)) {
@@ -108,20 +109,14 @@ SplitPolygonMode.drawAndSplit = function (state) {
       },
       onCancel: () => {
         setTimeout(() => {
-          try {
-            console.log('calling me cancel!!!!');            
-            state.api.changeMode("simple_select");
-            state.api.deleteAll();
-            console.log("call completed");
-          } catch (error) {
-            console.error("🚀 ~ file: mode.js ~ line 115 ~ err", error);
-          }
+          state.api.changeMode("simple_select");
+          state.api.deleteAll();
         }, 0);
         this.highlighFeatures(state, false);
       },
     });
   } catch (err) {
-    console.error("🚀 ~ file: mode.js ~ line 122 ~ err", err);
+    console.error("🚀 ~ file: mode.js ~ line 118 ~ err", err);
   }
 };
 
