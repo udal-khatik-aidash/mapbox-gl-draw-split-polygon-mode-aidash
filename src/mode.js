@@ -82,6 +82,11 @@ SplitPolygonMode.drawAndSplit = function (state) {
         console.log({ featuresToSplit: state.featuresToSplit });
 
         state.featuresToSplit.forEach((el) => {
+          console.log({ el });
+          console.log({ cuttingLineString });
+          console.log(booleanDisjoint(el, cuttingLineString));
+          console.log("hii");
+          
           if (booleanDisjoint(el, cuttingLineString)) {
             console.log('line was outside of polygon');
             console.info(`Line was outside of Polygon ${el.id}`);
