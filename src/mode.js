@@ -79,40 +79,35 @@ SplitPolygonMode.drawAndSplit = function (state) {
       onDraw: (cuttingLineString) => {
         const newPolygons = [];
         
-        console.log({ featuresToSplit: state.featuresToSplit });
-
         state.featuresToSplit.forEach((el) => {
-          console.log({ el });
-          console.log({ cuttingLineString });
-          console.log(booleanDisjoint(el, cuttingLineString));
-          console.log("hii");
-          
-          if (booleanDisjoint(el, cuttingLineString)) {
-            console.log('line was outside of polygon');
-            console.info(`Line was outside of Polygon ${el.id}`);
-            newPolygons.push(el);
-            return;
-          } else if (lineWidth === 0) {
-            console.log('line width is 0');
-            const polycut = polygonCut(el.geometry, cuttingLineString.geometry);
-            polycut.id = el.id;
-            api.add(polycut);
-            newPolygons.push(polycut);
-          } else {
-            console.log('line width is not 0');
-            const polycut = polygonCutWithSpacing(
-              el.geometry,
-              cuttingLineString.geometry,
-              {
-                line_width: lineWidth,
-                line_width_unit: lineWidthUnit,
-              }
-            );
-            console.log({ polycut });
-
-            polycut.id = el.id;
-            api.add(polycut);
-            newPolygons.push(polycut);
+          try {
+            if (booleanDisjoint(el, cuttingLineString)) {
+              console.info(`Line was outside of Polygon ${el.id}`);
+              newPolygons.push(el);
+              return;
+            } else if (lineWidth === 0) {
+              const polycut = polygonCut(el.geometry, cuttingLineString.geometry);
+              polycut.id = el.id;
+              api.add(polycut);
+              newPolygons.push(polycut);
+            } else {
+              const polycut = polygonCutWithSpacing(
+                el.geometry,
+                cuttingLineString.geometry,
+                {
+                  line_width: lineWidth,
+                  line_width_unit: lineWidthUnit,
+                }
+              );
+              polycut.id = el.id;
+              api.add(polycut);
+              newPolygons.push(polycut);
+            }
+          } catch (error) {
+            console.error("Error processing polygon split:", error);
+            console.error("Polygon:", el);
+            console.error("Line:", cuttingLineString);
+            // Continue with next polygon instead of breaking
           }
         });
 
