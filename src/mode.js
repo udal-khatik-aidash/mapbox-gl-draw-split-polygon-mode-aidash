@@ -107,6 +107,7 @@ SplitPolygonMode.drawAndSplit = function (state) {
         this.highlighFeatures(state, false);
       },
       onCancel: () => {
+        this.deleteAll();
         this.highlighFeatures(state, false);
       },
     });
@@ -132,12 +133,6 @@ SplitPolygonMode.fireUpdate = function (newF) {
     action: modeName,
     features: newF,
   });
-};
-
-SplitPolygonMode.onStop = function () {
-  console.log("im here!!!!!!! deleting everything");
-
-  this.deleteAll();
 };
 
 export default SplitPolygonMode;
