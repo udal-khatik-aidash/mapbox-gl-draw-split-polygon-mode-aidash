@@ -107,7 +107,13 @@ SplitPolygonMode.drawAndSplit = function (state) {
         this.highlighFeatures(state, false);
       },
       onCancel: () => {
-        this.deleteAll();
+        const allFeatures = this.getAll();
+        console.log(allFeatures);
+        
+        if (allFeatures?.features && allFeatures.features.length > 0) {
+          const featureIds = allFeatures.features.map(feature => feature.id);
+          this.deleteFeature(featureIds, { silent: true });
+        }
         this.highlighFeatures(state, false);
       },
     });
