@@ -27,6 +27,9 @@ SplitPolygonMode.onSetup = function (opt) {
     onSelectFeatureRequest = defaultOptions.onSelectFeatureRequest,
   } = opt || {};
 
+  console.log('im here on split step again');
+  
+
   const api = this._ctx.api;
 
   const featuresToSplit = [];
@@ -73,6 +76,9 @@ SplitPolygonMode.onSetup = function (opt) {
 SplitPolygonMode.drawAndSplit = function (state) {
   const { api, options } = state;
   const { lineWidth, lineWidthUnit } = options;
+
+  console.log('im here on draw and split again');
+  
 
   try {
     this.changeMode(passingModeName, {
