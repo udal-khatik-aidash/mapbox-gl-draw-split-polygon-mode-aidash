@@ -111,8 +111,6 @@ SplitPolygonMode.drawAndSplit = function (state) {
           }
         });
 
-        console.log({ newPolygons });
-
         try {
           this.fireUpdate(newPolygons);
           this.highlighFeatures(state, false);
