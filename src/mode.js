@@ -111,8 +111,6 @@ SplitPolygonMode.drawAndSplit = function (state) {
           }
         });
 
-        console.log({ newPolygons });
-
         try {
           this.fireUpdate(newPolygons);
           this.highlighFeatures(state, false);
@@ -122,10 +120,10 @@ SplitPolygonMode.drawAndSplit = function (state) {
 
       },
       onCancel: () => {
-        setTimeout(() => {
-          state.api.changeMode("simple_select");
-          state.api.deleteAll();
-        }, 0);
+        // setTimeout(() => {
+        //   state.api.changeMode("simple_select");
+        //   state.api.deleteAll();
+        // }, 0);
         this.highlighFeatures(state, false);
       },
     });
