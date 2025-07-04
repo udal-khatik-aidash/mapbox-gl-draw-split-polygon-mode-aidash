@@ -2,14 +2,12 @@ import polygonSplitter from "polygon-splitter";
 
 import { geojsonTypes, events } from "@mapbox/mapbox-gl-draw/src/constants";
 
-import { 
-  lineIntersect, 
-  booleanDisjoint,
-  lineOffset,
-  lineToPolygon,
-  difference,
-  lineString
-} from "@turf/turf";
+import lineIntersect from "@turf/line-intersect";
+import booleanDisjoint from "@turf/boolean-disjoint";
+import lineOffset from "@turf/line-offset";
+import lineToPolygon from "@turf/line-to-polygon";
+import difference from "@turf/difference";
+import { lineString } from "@turf/helpers";
 
 import {
   modeName,
