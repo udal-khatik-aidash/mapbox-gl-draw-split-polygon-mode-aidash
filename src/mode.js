@@ -105,25 +105,15 @@ SplitPolygonMode.drawAndSplit = function (state) {
             }
           } catch (error) {
             console.error("Error processing polygon split:", error);
-            console.error("Polygon:", el);
-            console.error("Line:", cuttingLineString);
-            // Continue with next polygon instead of breaking
           }
         });
 
-        try {
-          this.fireUpdate(newPolygons);
-          this.highlighFeatures(state, false);
-        } catch (error) {
-          console.error("Error firing update:", error);
-        }
+        console.log({ newPolygons });
+        this.fireUpdate(newPolygons);
+        this.highlighFeatures(state, false);
 
       },
       onCancel: () => {
-        // setTimeout(() => {
-        //   state.api.changeMode("simple_select");
-        //   state.api.deleteAll();
-        // }, 0);
         this.highlighFeatures(state, false);
       },
     });
