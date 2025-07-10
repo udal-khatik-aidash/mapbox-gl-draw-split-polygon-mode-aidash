@@ -109,7 +109,11 @@ SplitPolygonMode.drawAndSplit = function (state) {
           }
         });
 
-        console.log({ newPolygons });
+        if (newPolygons.length !== 1 || (newPolygons[0].geometry.type !== 'MultiPolygon' && newPolygons[0].geometry.coordinates.length !== 2)) {
+          this.map.fire(splitPolygonModeEvents.SPLIT_POLYGON_MORE_THAN_TWO_POLYGONS, {
+            newPolygons,
+          });
+        }
         
         this.fireUpdate(newPolygons);
         this.highlighFeatures(state, false);
