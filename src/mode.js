@@ -81,6 +81,13 @@ SplitPolygonMode.drawAndSplit = function (state) {
       onDraw: (cuttingLineString) => {
         const newPolygons = [];
         let isInvalidLine = false;
+
+        console.log(cuttingLineString, 'cuttingLineString');
+
+        if (!cuttingLineString) {
+          isInvalidLine = true;
+        }
+        
         
         state.featuresToSplit.forEach((el) => {
           try {
