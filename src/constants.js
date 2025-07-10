@@ -19,4 +19,5 @@ export const defaultOptions = {
 
 export const splitPolygonModeEvents = {
   SPLIT_POLYGON_MODE_STOP: 'draw:split_polygon_mode:stop',
+  SPLIT_POLYGON_MORE_THAN_TWO_POLYGONS: 'draw:split_polygon_mode:more_than_two_polygons',
 }
