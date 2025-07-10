@@ -80,6 +80,9 @@ SplitPolygonMode.drawAndSplit = function (state) {
       onDraw: (cuttingLineString) => {
         const newPolygons = [];
         let isLineWithinPolygon = false;
+
+        console.log(state.featuresToSplit, 'featuresToSplit');
+        
         
         state.featuresToSplit.forEach((el) => {
           try {
@@ -108,7 +111,11 @@ SplitPolygonMode.drawAndSplit = function (state) {
             console.error("Error processing polygon split:", error);
           }
         });
+
+        console.log(newPolygons, 'newPolygons');
+        console.log(isLineWithinPolygon, 'isLineWithinPolygon');
         
+
         this.fireUpdate(newPolygons);
         this.highlighFeatures(state, false);
         if (isLineWithinPolygon || newPolygons.length !== 1 || (newPolygons[0].geometry?.type === 'MultiPolygon' && newPolygons[0].geometry?.coordinates?.length !== 2)) {
