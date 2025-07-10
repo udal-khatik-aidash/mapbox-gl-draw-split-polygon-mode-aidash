@@ -16,3 +16,7 @@ export const defaultOptions = {
     throw new Error("no Feature is selected to split.");
   },
 };
+
+export const splitPolygonModeEvents = {
+  SPLIT_POLYGON_MODE_STOP: 'draw:split_polygon_mode:stop',
+}

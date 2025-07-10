@@ -14,6 +14,7 @@ import {
   passingModeName,
   highlightPropertyName,
   defaultOptions,
+  splitPolygonModeEvents,
 } from "./constants";
 
 const SplitPolygonMode = {};
@@ -26,9 +27,6 @@ SplitPolygonMode.onSetup = function (opt) {
     lineWidthUnit = defaultOptions.lineWidthUnit,
     onSelectFeatureRequest = defaultOptions.onSelectFeatureRequest,
   } = opt || {};
-
-  console.log('im here on split step again');
-  
 
   const api = this._ctx.api;
 
@@ -77,9 +75,6 @@ SplitPolygonMode.drawAndSplit = function (state) {
   const { api, options } = state;
   const { lineWidth, lineWidthUnit } = options;
 
-  console.log('im here on draw and split again');
-  
-
   try {
     this.changeMode(passingModeName, {
       onDraw: (cuttingLineString) => {
@@ -114,13 +109,13 @@ SplitPolygonMode.drawAndSplit = function (state) {
           }
         });
 
-        console.log({ newPolygons });
         this.fireUpdate(newPolygons);
         this.highlighFeatures(state, false);
 
       },
       onCancel: () => {
         this.highlighFeatures(state, false);
+        this.map.fire(splitPolygonModeEvents.SPLIT_POLYGON_MODE_STOP);
       },
     });
   } catch (err) {
