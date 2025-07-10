@@ -79,10 +79,12 @@ SplitPolygonMode.drawAndSplit = function (state) {
     this.changeMode(passingModeName, {
       onDraw: (cuttingLineString) => {
         const newPolygons = [];
+        let isLineWithinPolygon = false;
         
         state.featuresToSplit.forEach((el) => {
           try {
             if (booleanDisjoint(el, cuttingLineString)) {
+              isLineWithinPolygon = true;
               return;
             } else if (lineWidth === 0) {
               const polycut = polygonCut(el.geometry, cuttingLineString.geometry);
@@ -107,9 +109,11 @@ SplitPolygonMode.drawAndSplit = function (state) {
           }
         });
         
+        console.log({ polygons: newPolygons });
+        
         this.fireUpdate(newPolygons);
         this.highlighFeatures(state, false);
-        if (newPolygons.length !== 1 || (newPolygons[0].geometry.type === 'MultiPolygon' && newPolygons[0].geometry.coordinates.length !== 2)) {
+        if (newPolygons.length !== 1 || (newPolygons[0].geometry.type === 'MultiPolygon' && newPolygons[0].geometry.coordinates.length !== 2) || isLineWithinPolygon) {
           this.map.fire(splitPolygonModeEvents.SPLIT_POLYGON_MORE_THAN_TWO_POLYGONS, {
             newPolygons,
           });
