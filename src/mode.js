@@ -8,6 +8,7 @@ import lineOffset from "@turf/line-offset";
 import lineToPolygon from "@turf/line-to-polygon";
 import difference from "@turf/difference";
 import { lineString } from "@turf/helpers";
+import booleanContains from "@turf/boolean-contains";
 
 import {
   modeName,
@@ -80,14 +81,17 @@ SplitPolygonMode.drawAndSplit = function (state) {
       onDraw: (cuttingLineString) => {
         const newPolygons = [];
         let isLineWithinPolygon = false;
-
-        console.log(state.featuresToSplit, 'featuresToSplit');
-        
         
         state.featuresToSplit.forEach((el) => {
           try {
-            if (booleanDisjoint(el, cuttingLineString)) {
+            if (booleanContains(el, cuttingLineString)) {
               isLineWithinPolygon = true;
+              return;
+            }
+            
+            if (booleanDisjoint(el, cuttingLineString)) {
+              console.info(`Line was outside of Polygon ${el.id}`);
+              newPolygons.push(el);
               return;
             } else if (lineWidth === 0) {
               const polycut = polygonCut(el.geometry, cuttingLineString.geometry);
@@ -111,11 +115,7 @@ SplitPolygonMode.drawAndSplit = function (state) {
             console.error("Error processing polygon split:", error);
           }
         });
-
-        console.log(newPolygons, 'newPolygons');
-        console.log(isLineWithinPolygon, 'isLineWithinPolygon');
         
-
         this.fireUpdate(newPolygons);
         this.highlighFeatures(state, false);
         if (isLineWithinPolygon || newPolygons.length !== 1 || (newPolygons[0].geometry?.type === 'MultiPolygon' && newPolygons[0].geometry?.coordinates?.length !== 2)) {
