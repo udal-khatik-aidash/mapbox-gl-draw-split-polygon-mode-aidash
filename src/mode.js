@@ -8,6 +8,7 @@ import lineOffset from "@turf/line-offset";
 import lineToPolygon from "@turf/line-to-polygon";
 import difference from "@turf/difference";
 import { lineString } from "@turf/helpers";
+import booleanContains from "@turf/boolean-contains";
 
 import {
   modeName,
@@ -82,6 +83,11 @@ SplitPolygonMode.drawAndSplit = function (state) {
         
         state.featuresToSplit.forEach((el) => {
           try {
+            if (booleanContains(el, cuttingLineString)) {
+              console.info(`Line is completely within Polygon ${el.id}`);
+              newPolygons.push(el);
+              return;
+            }
             if (booleanDisjoint(el, cuttingLineString)) {
               console.info(`Line was outside of Polygon ${el.id}`);
               newPolygons.push(el);
