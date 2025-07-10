@@ -108,9 +108,6 @@ SplitPolygonMode.drawAndSplit = function (state) {
             console.error("Error processing polygon split:", error);
           }
         });
-
-        console.log({ newPolygons });
-
         
         this.fireUpdate(newPolygons);
         this.highlighFeatures(state, false);
