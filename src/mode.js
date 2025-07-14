@@ -82,8 +82,6 @@ SplitPolygonMode.drawAndSplit = function (state) {
         const newPolygons = [];
         let isInvalidLine = false;
 
-        console.log(cuttingLineString, 'cuttingLineString');
-
         if (!cuttingLineString) {
           isInvalidLine = true;
         }
@@ -124,11 +122,19 @@ SplitPolygonMode.drawAndSplit = function (state) {
         
         this.fireUpdate(newPolygons);
         this.highlighFeatures(state, false);
+        
         if (isInvalidLine || newPolygons.length !== 1 || (newPolygons[0].geometry?.type === 'MultiPolygon' && newPolygons[0].geometry?.coordinates?.length !== 2)) {
           this.map.fire(splitPolygonModeEvents.SPLIT_POLYGON_MORE_THAN_TWO_POLYGONS, {
             newPolygons,
           });
         }
+
+        let numberOfPolygons = 0;
+        if (!isInvalidLine && newPolygons.length !== 0) {
+            numberOfPolygons = extractPolygons(newPolygons).length;
+        }
+
+        console.log(numberOfPolygons, 'numberOfPolygons');
 
       },
       onCancel: () => {
