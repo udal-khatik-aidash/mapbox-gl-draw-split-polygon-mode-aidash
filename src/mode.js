@@ -17,6 +17,7 @@ import {
   defaultOptions,
   splitPolygonModeEvents,
 } from "./constants";
+import { extractPolygons } from "./utils";
 
 const SplitPolygonMode = {};
 
@@ -131,7 +132,7 @@ SplitPolygonMode.drawAndSplit = function (state) {
 
         let numberOfPolygons = 0;
         if (!isInvalidLine && newPolygons.length !== 0) {
-            numberOfPolygons = extractPolygons(newPolygons).length;
+            numberOfPolygons = extractPolygons(newPolygons[0]).length;
         }
 
         console.log(numberOfPolygons, 'numberOfPolygons');
