@@ -8,7 +8,6 @@ import lineOffset from "@turf/line-offset";
 import lineToPolygon from "@turf/line-to-polygon";
 import difference from "@turf/difference";
 import { lineString } from "@turf/helpers";
-import booleanContains from "@turf/boolean-contains";
 
 import {
   modeName,
@@ -90,15 +89,16 @@ SplitPolygonMode.drawAndSplit = function (state) {
         
         state.featuresToSplit.forEach((el) => {
           try {
-            if (booleanContains(el, cuttingLineString)) {
-              isInvalidLine = true;
-              return;
-            }
-            
             if (booleanDisjoint(el, cuttingLineString)) {
               isInvalidLine = true;
               return;
-            } else if (lineWidth === 0) {
+            }
+            const intersects = lineIntersect(el, cuttingLineString);
+            if (intersects.features.length === 0) {
+              isInvalidLine = true;
+              return;
+            }
+            if (lineWidth === 0) {
               const polycut = polygonCut(el.geometry, cuttingLineString.geometry);
               polycut.id = el.id;
               api.add(polycut);
