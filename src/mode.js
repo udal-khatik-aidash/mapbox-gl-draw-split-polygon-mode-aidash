@@ -94,7 +94,7 @@ SplitPolygonMode.drawAndSplit = function (state) {
               return;
             }
             const intersects = lineIntersect(el, cuttingLineString);
-            if (intersects.features.length === 0) {
+            if (intersects.features.length < 2) {
               isInvalidLine = true;
               return;
             }
